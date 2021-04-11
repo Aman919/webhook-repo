@@ -43,15 +43,8 @@ def api_gh_message():
             value['timestamp'] = my_info['repository']['created_at']
             value['to_branch'] = my_info['repository']['default_branch']
             value['action'] = 'push_request'
-        #elif 'merge' in my_info.keys()
+     
         my_db = mongo.db.mydb
-        # print(value)
-        # data = {
-        #     'name': 'Prashant',
-        #     'email':'google@gmail.com',
-        #     'phnumber': '100'
-        # }
-        # my_db.insert_one(value)
     return value
 
 
