@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI</title>
+</head>
+<body>
+    <h1>UI</h1>
+    <p id="update"></p>
+    <script>
+        const p = document.getElementById("p");
+        const createMessage = (data) => {
+            let message="";
+            if(data.action == 'pull_request'){
+                message = `${data.author} submitter a pull request from ${data.from_branch} to ${data.to_branch} on ${data.timestamp}`
+            } else if(data.action == 'push'){
+                message = `${data.author} pushed to ${data.to_branch} on ${data.timestamp}`;
+            } else{
+                message = `${data.author} merged branch ${data.from_branch} to {data.to_branch} on ${data.timestamp}`;
+            }
+            return message;
+        }
+        const getUpdate = () => {
+            //console.log("Fetching the latest data from the server: ");
+            fetch('/get_update')
+            .then(response => {
+                return response.json();
+            })
+            .then(users=> {
+                console.log(users._id);
+                let message = createMessage(users);
+                //console.log(message);
+                document.getElementById('update').innerHTML = message;
+            })
+        }
+        getUpdate()
+        setInterval(getUpdate, 2000); //going to run this function at an interval of 2000ms(millisecond) = 2 seconds
+
+    </script>
+</body>
+</html>
